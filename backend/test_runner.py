@@ -12,19 +12,9 @@ class TestRunner:
             else:
                 test_file_path = os.path.join(temp_dir, f"test_script.{language}")
             
-            if language != "python":
-                with open(test_file_path, "w") as test_file:
-                    test_file.write(test_cases)
-            
-            if language == "python":
-                try:
-                    test_json = json.loads(test_cases)  # Ensure it's a dictionary
-                except json.JSONDecodeError:
-                    return {"error": "Invalid JSON format in test cases"}
-                
-                test_code = self.generate_python_test(test_json)
-                with open(test_file_path, "w") as test_file:
-                    test_file.write(test_code)
+            print(test_cases)
+            with open(test_file_path, "w") as test_file:
+                test_file.write(test_cases)
 
             try:
                 if language == "python":
@@ -45,27 +35,4 @@ class TestRunner:
                 return result.stdout or result.stderr, {"coverage": "Generated coverage report"}
             except subprocess.TimeoutExpired:
                 return {"error": "Test execution timed out"}
-            
-    def generate_python_test(self, json_data):
-        imports = "\n".join(f"import {imp}" for imp in json_data.get("imports", []))
-        setup_code = json_data.get("setup", "")
 
-        test_classes = []
-        for test in json_data.get("tests", []):
-            class_name = test.get("class_name", "TestClass")
-            methods = "\n".join(
-                f"    def {method.get('name', 'test_case')}(self):\n        {method.get('code', 'pass')}"
-                for method in test.get("methods", [])
-            )
-            test_classes.append(f"class {class_name}(unittest.TestCase):\n{methods}")
-
-        execution_code = json_data.get("execution", "")
-        
-        test_script = (
-            f"{imports}\n\n"
-            f"{setup_code}\n\n"
-            + "\n\n".join(test_classes) + "\n\n"
-            f"{execution_code}"
-        )
-
-        return test_script

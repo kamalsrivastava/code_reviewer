@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import axios from "axios";
 import Editor from "react-monaco-editor";
 
@@ -6,6 +6,20 @@ export default function LeftSide({ setReviewOutput }) {
   const [language, setLanguage] = useState("python");
   const [code, setCode] = useState("");
   const [output, setOutput] = useState("");
+  const editorRef = useRef(null); // Reference to the Monaco Editor instance
+
+  // Function to update Monaco Editor layout
+  const updateEditorLayout = () => {
+    if (editorRef.current) {
+      editorRef.current.layout();
+    }
+  };
+
+  // Attach resize event listener
+  useEffect(() => {
+    window.addEventListener("resize", updateEditorLayout);
+    return () => window.removeEventListener("resize", updateEditorLayout);
+  }, []);
 
   // Send code to Flask backend for execution
   const handleCompileRun = async () => {
@@ -59,14 +73,13 @@ export default function LeftSide({ setReviewOutput }) {
     <div
       style={{
         width: "50vw",
-        height: "100vh",
+        height: "105vh",
         display: "flex",
         flexDirection: "column",
         margin: 0,
         padding: 0,
-        background: "radial-gradient(circle at top left, #141E30, rgb(10, 10, 10))",
+        background: "#171717",
         color: "#fff",
-        boxShadow: "inset 0 0 60px rgba(0,0,0,0.5)",
       }}
     >
       {/* Top Bar: Language Selection + Compile/Run + Code Review */}
@@ -91,7 +104,7 @@ export default function LeftSide({ setReviewOutput }) {
             onChange={(e) => setLanguage(e.target.value)}
             style={{
               backgroundColor: "transparent",
-              color: "#000",
+              color: "#fff",
               border: "1px solid #ccc",
               padding: "0.3rem",
             }}
@@ -139,13 +152,18 @@ export default function LeftSide({ setReviewOutput }) {
       </div>
 
       {/* Code Editor */}
-      <div style={{ height: "60%", borderTop: "1px solid rgba(255,255,255,0.2)" }}>
+      <div style={{ flex: 1, display: "flex", flexDirection: "column", minHeight: 0 }}>
         <Editor
+          ref={editorRef}
           height="100%"
           width="100%"
           language={language}
           theme="vs-dark"
           value={code}
+          style={{
+            outline: "none",  // Remove the outline
+            border: "none",   // Remove any border
+          }}
           onChange={(newCode) => setCode(newCode)}
           options={{
             lineNumbers: "on",
@@ -153,6 +171,10 @@ export default function LeftSide({ setReviewOutput }) {
             wordWrap: "on",
             scrollBeyondLastLine: false,
             fontSize: 14,
+          }}
+          editorDidMount={(editor) => {
+            editorRef.current = editor;
+            updateEditorLayout(); // Ensure correct layout on mount
           }}
         />
       </div>
