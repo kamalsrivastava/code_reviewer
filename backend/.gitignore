@@ -1,0 +1,41 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Virtual environment
+venv/
+env/
+*.env
+*.venv
+
+# Flask instance and logs
+instance/
+logs/
+*.log
+
+# Temporary files
+*.swp
+*.swo
+.DS_Store
+*.bak
+*.tmp
+tmp/
+
+# System files
+Thumbs.db
+.vscode/
+.idea/
+*.iml
+
+# Python packages
+*.egg-info/
+pip-log.txt
+
+# OS-specific files
+*.~undo-tree~
+
+# Secret keys
+config.json
+.env
