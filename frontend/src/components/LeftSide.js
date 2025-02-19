@@ -2,7 +2,7 @@ import React, { useState, useRef, useEffect } from "react";
 import axios from "axios";
 import Editor from "react-monaco-editor";
 
-export default function LeftSide({ setReviewOutput, setTestReport, setGeneratedTests }) {
+export default function LeftSide({ setReviewOutput, setTestReport, setGeneratedTests, setLang, setUserCode, setCmd }) {
   const [language, setLanguage] = useState("python");
   const [code, setCode] = useState("");
   const [output, setOutput] = useState("");
@@ -45,6 +45,8 @@ export default function LeftSide({ setReviewOutput, setTestReport, setGeneratedT
   const handleCodeReview = async () => {
     setGeneratedTests('Please Wait');
     setTestReport('');
+    setLang(language);
+    setUserCode(code);
     if (!code.trim()) {
       setOutput("Error: Code is empty.");
       return;
@@ -67,6 +69,7 @@ export default function LeftSide({ setReviewOutput, setTestReport, setGeneratedT
 
       setTestReport(parsedTestReport);
       setGeneratedTests(response1.data.test_cases || "No generated tests available.");
+      setCmd(response1.data.test_results);
 
       // setReviewOutput(response.data.ai_suggestions || "No review feedback.");
     } catch (error) {
