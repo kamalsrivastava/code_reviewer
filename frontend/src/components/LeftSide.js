@@ -113,7 +113,7 @@ export default function LeftSide({ setReviewOutput, setTestReport, setGeneratedT
             onChange={(e) => setLanguage(e.target.value)}
             style={{
               backgroundColor: "transparent",
-              color: "#fff",
+              color: "#000",
               border: "1px solid #ccc",
               padding: "0.3rem",
             }}

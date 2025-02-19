@@ -142,7 +142,7 @@ export default function RightSide({ reviewOutput, testReport, generatedTests, la
         )}
       </div>
 
-      <Card sx={{ marginTop: "1rem", padding: "1rem", position: "relative", minHeight: "180px"  }}>
+      <Card sx={{ marginTop: "1rem", padding: "0.5rem", position: "relative", minHeight: "180px", maxHeight: '60vh'  }}>
         {generatedTests == "Please Wait" && (
             <div
               style={{
@@ -202,11 +202,29 @@ export default function RightSide({ reviewOutput, testReport, generatedTests, la
         )}
 
         {activeTab === "generatedTests" && (
-          <CardContent sx={{ paddingBottom: "1.5rem" }}>
+          <CardContent sx={{ display: "flex", flexDirection: "column", flexGrow: 1, overflow: "hidden" }}>
             <h3>Generated Test Code</h3>
-            <pre style={{ backgroundColor: "#f4f4f4", padding: "1rem", borderRadius: "5px", fontFamily: "monospace", whiteSpace: "pre-wrap", overflowX: "auto", overflowY: 'auto', maxHeight: '50vh', marginBottom: "2rem", border: "1px solid #ccc", boxShadow: "inset 0 0 5px rgba(0,0,0,0.1)" }}>
-              {generatedTests || "No generated tests available."}
-            </pre>
+            <div style={{ flexGrow: 1, display: "flex", flexDirection: "column" }}>
+              <pre
+                style={{
+                  backgroundColor: "#f4f4f4",
+                  padding: "1rem",
+                  borderRadius: "5px",
+                  fontFamily: "monospace",
+                  whiteSpace: "pre-wrap",
+                  wordBreak: "break-word",
+                  overflowY: "auto",
+                  overflowX: "auto",
+                  maxHeight: "22vh",
+                  flexGrow: 1,
+                  marginBottom: "0.5rem",
+                  border: "1px solid #ccc",
+                  boxShadow: "inset 0 0 5px rgba(0,0,0,0.1)",
+                }}
+              >
+                {generatedTests || "No generated tests available."}
+              </pre>
+            </div>
           </CardContent>
         )}
       </Card>
