@@ -119,6 +119,7 @@ def test_code():
     
     # Step 4: Execute the Generated Tests
     test_runner = TestRunner()
+    # test_results, coverage_report = test_runner.run_tests(code, test_cases, language)
     test_results, coverage_report = test_runner.run_tests(code, test_cases, language)
     
     # Step 5: Return Unified JSON Response
