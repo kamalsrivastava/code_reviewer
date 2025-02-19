@@ -2,7 +2,7 @@ import React, { useState, useRef, useEffect } from "react";
 import axios from "axios";
 import Editor from "react-monaco-editor";
 
-export default function LeftSide({ setReviewOutput }) {
+export default function LeftSide({ setReviewOutput, setTestReport, setGeneratedTests }) {
   const [language, setLanguage] = useState("python");
   const [code, setCode] = useState("");
   const [output, setOutput] = useState("");
@@ -43,6 +43,8 @@ export default function LeftSide({ setReviewOutput }) {
 
   // Send code to Flask backend for review
   const handleCodeReview = async () => {
+    setGeneratedTests('Please Wait');
+    setTestReport('');
     if (!code.trim()) {
       setOutput("Error: Code is empty.");
       return;
@@ -61,6 +63,10 @@ export default function LeftSide({ setReviewOutput }) {
         language,
       });
       console.log(response1);
+      const parsedTestReport = parseTestReport(response1.data.test_results, language);
+
+      setTestReport(parsedTestReport);
+      setGeneratedTests(response1.data.test_cases || "No generated tests available.");
 
       // setReviewOutput(response.data.ai_suggestions || "No review feedback.");
     } catch (error) {
@@ -200,3 +206,56 @@ export default function LeftSide({ setReviewOutput }) {
     </div>
   );
 }
+
+const parseTestReport = (testResults, language) => {
+  let total = 0, passed = 0, failed = 0, time = "N/A";
+
+  if (language === "java") {
+    const match = testResults.match(/Tests run: (\d+), Failures: (\d+), Errors: (\d+), Skipped: (\d+)/);
+    if (match) {
+      total = parseInt(match[1], 10);
+      failed = parseInt(match[2], 10) + parseInt(match[3], 10);
+      passed = total - failed;
+    }
+    const timeMatch = testResults.match(/Total time:\s+([\d.]+) s/);
+    if (timeMatch) {
+      time = `${timeMatch[1]} s`;
+    }
+
+  } else if (language === "python") {
+    const match = testResults.match(/collected (\d+) items/);
+    if (match) {
+      total = parseInt(match[1], 10);
+    }
+    const passMatch = testResults.match(/(\d+) passed/);
+    if (passMatch) {
+      passed = parseInt(passMatch[1], 10);
+    }
+    failed = total - passed;
+
+    // **Updated Regex to Capture Execution Time Correctly**
+    const timeMatch = testResults.match(/(\d+\.\d+)s\s*=\s*$/m);
+    if (!timeMatch) {
+      const fallbackMatch = testResults.match(/(\d+\.\d+)s/);
+      if (fallbackMatch) {
+        time = `${fallbackMatch[1]} s`;
+      }
+    } else {
+      time = `${timeMatch[1]} s`;
+    }
+
+  } else if (language === "javascript") {
+    const match = testResults.match(/Tests:\s+(\d+) passed, (\d+) failed, (\d+) skipped/);
+    if (match) {
+      passed = parseInt(match[1], 10);
+      failed = parseInt(match[2], 10);
+      total = passed + failed;
+    }
+    const timeMatch = testResults.match(/Time:\s+([\d.]+)s/);
+    if (timeMatch) {
+      time = `${timeMatch[1]} s`;
+    }
+  }
+
+  return { total, passed, failed, time };
+};

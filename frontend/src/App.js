@@ -6,11 +6,13 @@ import RightSide from './components/RightSide';
 function App() {
   
   const [reviewOutput, setReviewOutput] = useState('');
+  const [testReport, setTestReport] = useState({});
+  const [generatedTests, setGeneratedTests] = useState('');
 
   return (
     <div style={{ display: 'flex', flexDirection: 'row' }}>
-      <LeftSide setReviewOutput={setReviewOutput}/>
-      <RightSide reviewOutput={reviewOutput}/>
+      <LeftSide setReviewOutput={setReviewOutput} setTestReport={setTestReport} setGeneratedTests={setGeneratedTests}/>
+      <RightSide reviewOutput={reviewOutput} testReport={testReport} generatedTests={generatedTests}/>
     </div>
   );
 }
