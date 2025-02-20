@@ -167,12 +167,15 @@ backend/
 🏠 Home Screen Views
 
 ![Home Screen](frontend/public/HomeScreenTab1.png)
+---
 ![Home Screen](frontend/public/HomeScreenTab2.png)
+---
 ![Language Selection](frontend/public/HomeScreenLanguageSelection.png)
 
 📊 Sample Output Views
 
 ![Sample Output](frontend/public/SampleOutputTab1.png)
+---
 ![Sample Output](frontend/public/SampleOutputTab2.png)
 
 
