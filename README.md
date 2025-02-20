@@ -1,161 +1,164 @@
-# AI-Powered Automated Code Reviewer & Test Generator
+# 🚀 AI-Powered Code Review & Unit Testing Tool
 
-## **Overview**
-This project is an **AI-powered automated code reviewer and unit test generator** that leverages **OpenAI's GPT-4** to generate unit tests for Python, Java, and JavaScript functions. The system ensures that test files are:
-- Fully executable
-- Free of errors
-- Cover valid inputs, edge cases, and exceptions
-- Generated in a structured format based on best testing practices
+## 📝 Overview
+This project is an **AI-powered code review and unit testing tool** that allows users to write, execute, and review code in multiple programming languages (**Python, Java, and JavaScript**). It provides **real-time AI-generated code reviews and unit tests**, offering feedback and improvements based on best practices.
 
-Additionally, the project includes a **test runner** that executes the generated tests using `pytest` (for Python), `Maven` (for Java), and `Jest` (for JavaScript).
+## ✨ Features
+- ✅ **Multi-language Support**: Python, Java, JavaScript
+- ⚡ **Code Execution**: Runs user-provided code in a secure sandbox environment
+- 🤖 **AI-Powered Code Review**: Analyzes code for best practices, efficiency, and potential improvements
+- 🧪 **Automated Unit Test Generation**: Generates unit tests using AI and executes them
+- 📄 **Downloadable Reports**: Provides detailed reports in PDF format
+
+## 🛠️ Tech Stack
+### 🎨 Frontend
+- ⚛️ **React.js**
+- 📝 **Monaco Editor** (for code editing)
+- 🔗 **Axios** (for API communication)
+- 🎭 **Material UI** (for UI components)
+- 📜 **jsPDF** (for generating downloadable reports)
+
+### 🔧 Backend
+- 🐍 **Flask** (Python-based web framework)
+- 🤖 **OpenAI API** (for AI-powered review & test generation)
+- 🧪 **Pytest / JUnit / Mocha-Chai** (for test execution)
+- ☕ **Maven** (for Java test execution)
+- 🔄 **Flask-CORS** (for enabling cross-origin requests)
 
 ---
+## 🚀 Installation & Setup
 
-## **Features**
-✔️ Generates **fully executable** unit tests for Python, Java, and JavaScript  
-✔️ Uses **GPT-4** to generate high-quality tests with appropriate assertions  
-✔️ Covers **valid inputs, boundary cases, and exception handling**  
-✔️ Executes the generated test cases and returns test results  
+### 🔗 Prerequisites
+- 🟢 **Node.js** (for frontend)
+- 🐍 **Python 3** (for backend)
+- 📦 **Flask & Dependencies**
+- ☕ **Java (JDK)** (for Java execution & testing)
+- 🏗️ **Virtual Environment (venv) for Python**
 
----
-
-## **Installation**
-
-### **1. Clone the Repository**
+### 📂 Clone the Repository
 ```sh
-git clone https://github.com/kamalsrivastava/code_reviewer.git
-cd code_reviewer
+$ git clone https://github.com/kamalsrivastava/code_reviewer.git
+$ cd code_reviewer
 ```
 
-### **2. Set Up a Virtual Environment**
+### 🔥 Backend Setup
+#### 1️⃣ Create and activate virtual environment
 ```sh
-cd backend
-python -m venv venv
-source venv/bin/activate  # On Mac/Linux
-venv\Scripts\activate     # On Windows
+$ cd backend
+$ python -m venv venv
+$ source venv/bin/activate   # On macOS/Linux
+$ venv\Scripts\activate     # On Windows
 ```
 
-### **3. Install Dependencies**
-- **Frontend**:
-     ```bash
-     cd frontend
-     npm install
-     ```
-- **Backend**:
-  ```bash
-  venv\scripts\activate
-  cd backend
-  pip install -r requirements.txt
-  ```
-### **4. Set Up OpenAI API Key**
-Create a `.env` file in the project root and add your OpenAI API key:
-```
-OPENAI_API_KEY=your-api-key-here
-```
-Alternatively, update `config.py`:
-```python
-OPENAI_API_KEY = "your-api-key-here"
+#### 2️⃣ Install dependencies
+```sh
+$ pip install -r requirements.txt
 ```
 
-### **5. Run the Application**
-- **Backend**:
-     ```bash
-     cd backend
-     python -m flask run
-     ```
- - **Frontend**:
-   ```bash
-   cd frontend
-   npm start
-   ```
+#### 3️⃣ Run Flask Server
+```sh
+$ python app.py
+```
+
+### 🎨 Frontend Setup
+#### 1️⃣ Install dependencies
+```sh
+$ cd frontend
+$ npm install
+```
+
+#### 2️⃣ Run React App
+```sh
+$ npm start
+```
+
+🚀 The application should now be running at `http://localhost:3000` with the backend at `http://127.0.0.1:5000`.
 
 ---
+## 🌍 API Endpoints
 
-## **Project Structure**
-### Backend
+### 1️⃣ **Execute Code**
+🔹 **POST** `/execute`
+- 📥 **Request Keys:**
+  - `code` (string) - The code to be executed
+  - `language` (string) - The programming language
+- 📤 **Response Keys:**
+  - `output` (string) - The output or error message from execution
+
+### 2️⃣ **AI-Powered Code Review**
+🔹 **POST** `/review`
+- 📥 **Request Keys:**
+  - `code` (string) - The code to be reviewed
+  - `language` (string) - The programming language
+- 📤 **Response Keys:**
+  - `lint_results` (string) - Static analysis results
+  - `ai_suggestions` (string) - AI-generated suggestions
+
+### 3️⃣ **Generate & Run Tests**
+🔹 **POST** `/test`
+- 📥 **Request Keys:**
+  - `code` (string) - The code to be tested
+  - `language` (string) - The programming language
+- 📤 **Response Keys:**
+  - `test_cases` (string) - The generated unit tests
+  - `test_results` (string) - Summary of test execution
+  - `coverage_report` (string) - Code coverage information
+
+---
+## 🎯 Usage Guide
+
+1️⃣ **Write Code**: Use the Monaco Editor on the left panel to enter code.
+2️⃣ **Select Language**: Choose **Python, Java, or JavaScript** from the dropdown.
+3️⃣ **Run Code**: Click **Compile/Run** to execute the code and view output.
+4️⃣ **Review Code**: Click **Code Review** to receive AI-generated feedback.
+5️⃣ **Generate Tests**: The system will generate and execute tests automatically.
+6️⃣ **Download Report**: A detailed test report can be downloaded as a **PDF**.
+
+---
+## 📂 File Structure
+### 🎨 Frontend
+```sh
+frontend/
+├── node_modules/
+├── public/
+├── src/
+│   ├── components/
+│   │   ├── LeftSide.js
+│   │   ├── RightSide.js
+│   ├── App.js
+│   ├── index.js
+│   ├── App.css
+│   ├── index.css
+│   ├── logo.svg
+│   ├── reportWebVitals.js
+├── package.json
+├── package-lock.json
+├── .gitignore
 ```
-📂 backend
-│── 📂 config          # Configuration files (API keys, environment variables)
-│── test_generator.py  # AI-powered test case generator using OpenAI API
-│── test_runner.py     # Executes test cases and generates reports
-│── code_reviewer.py   # AI-powered code-review
-│── app.py             # Flask-based API for test generation and execution and code-review
-│── requirements.txt   # Python dependencies
-│── README.md          # Project documentation
-│── .env               # Environment variables (OpenAI API key)
+
+### 🔥 Backend
+```sh
+backend/
+├── venv/
+├── .pytest_cache/
+├── __pycache__/
+├── app.py
+├── checkstyle.jar
+├── code_reviewer.py
+├── config.py
+├── function_extractor.py
+├── requirements.txt
+├── test_generator.py
+├── test_runner.py
+├── .gitignore
 ```
 
-### Frontend
-```plaintext
-/frontend
-├── /public
-│   └── index.html                # Main HTML file
-├── /src
-│   ├── /components
-│   │   ├── LeftSide.js       
-│   │   ├── RightSide.js    
-│   ├── App.js                    # Main React app component
-│   ├── index.js                  # React entry point
-│   └── /styles
-│       └── App.css               # Styling file
-├── package.json                  # React project dependencies
-└── .env                          # Environment variables (API keys, etc.)
-```
-
-
 ---
+## 🚀 Future Enhancements
+- 🔹 Add support for more languages (C++, C#)
+- 🔹 Enhance AI feedback with deeper static analysis
+- 🔹 Improve UI with syntax highlighting improvements
+- 🔹 Add integration with GitHub Actions for automated reviews
 
-## **How It Works**
-1. **Test Generation**:
-   - `CodeReviewer` sends a structured prompt to **GPT-4**.
-   - GPT-4 responds with a **Code Review suggesting changes if required**.
-   - `TestGenerator` sends a structured prompt to **GPT-4**.
-   - GPT-4 responds with a **fully executable test file**.
-   - The test file includes all necessary imports, test cases, and edge case handling.
-
-2. **Test Execution**:
-   - `TestRunner` writes the generated test cases to a temporary file.
-   - Runs the test using:
-     - `pytest` for Python
-     - `mvn test` for Java
-     - `jest` for JavaScript
-   - Returns the test results and code coverage.
-
----
-
-## **Troubleshooting**
-### **1. Test Cases Are Not Being Generated**
-- Ensure that the OpenAI API key is set in `.env` or `config.py`.
-- Verify that you have an active internet connection.
-
-### **2. Test Execution Fails**
-- Make sure `pytest`, `mvn`, or `jest` is installed.
-- Check the `test_cases` output to ensure it contains valid code.
-- If using a temporary directory, print the test file path for debugging.
-
-### **3. OpenAI API Rate Limits**
-- If your API calls exceed the limit, wait a few minutes and try again.
-- Consider upgrading your OpenAI API plan for higher rate limits.
-
----
-
-## **Contributing**
-If you'd like to contribute:
-1. Fork the repository.
-2. Create a new branch (`git checkout -b feature-branch`).
-3. Commit your changes (`git commit -m "Add new feature"`).
-4. Push to your branch (`git push origin feature-branch`).
-5. Create a Pull Request.
-
----
-
-## **License**
-This project is licensed under the **MIT License**.
-
----
-
-## **Contact**
-📧 Email: krishnakamal2908@gmail.com  
-🐙 GitHub: kamalsrivastava  
-```
+🎉 **Happy Coding!** 🎉
 

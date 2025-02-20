@@ -81,8 +81,13 @@ export default function RightSide({ reviewOutput, testReport, generatedTests, la
 
   return (
     <div style={{ width: "50vw", height: "100vh", backgroundColor: "#0D1A38", padding: "1rem", display: "flex", flexDirection: "column" }}>
-      <h2 style={{ color: "#FFFFFF", marginBottom: "2.3rem" }}>Code Review & Unit Tests</h2>
-
+      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+        <h2 style={{ color: "#FFFFFF", marginBottom: "2.3rem" }}>Code Review & Unit Tests</h2>
+        <Button variant="contained" onClick={handleDownload} disabled={!isDownloadEnabled} sx={{ padding: "4px 10px", fontSize: "0.75rem", position: "relative", minWidth: "auto" }}>
+          Download Report
+        </Button>
+      </div>
+  
       {/* Review Output Box */}
       <div
         style={{
@@ -186,11 +191,7 @@ export default function RightSide({ reviewOutput, testReport, generatedTests, la
             <Tab value="testReport" label="Test Case Report" />
             <Tab value="generatedTests" label="Generated Test Code" />
           </Tabs>
-          <Button variant="contained" onClick={handleDownload} disabled={!isDownloadEnabled} sx={{ padding: "2px 6px", fontSize: "0.50rem", position: "relative", minWidth: "auto", right: "8px", top: '12%', transform: "translateY(-50%)" }}>
-            Download Report
-          </Button>
-        </div>
-
+        </div>  
         {activeTab === "testReport" && (
           <CardContent>
             <h3>Test Case Report</h3>
@@ -198,9 +199,12 @@ export default function RightSide({ reviewOutput, testReport, generatedTests, la
             <p><strong>Passed:</strong> {testReport?.passed || 0}</p>
             <p><strong>Failed:</strong> {testReport?.failed || 0}</p>
             <p><strong>Execution Time:</strong> {testReport?.time || "N/A"}</p>
+            {isDownloadEnabled && <p style={{ textAlign: "center", marginTop: "1rem", fontStyle: "italic", color: "gray" }}>
+              Please Download Report for a more detailed Explanation
+            </p>}
           </CardContent>
         )}
-
+  
         {activeTab === "generatedTests" && (
           <CardContent sx={{ display: "flex", flexDirection: "column", flexGrow: 1, overflow: "hidden" }}>
             <h3>Generated Test Code</h3>
@@ -228,6 +232,7 @@ export default function RightSide({ reviewOutput, testReport, generatedTests, la
           </CardContent>
         )}
       </Card>
+  
       {/* CSS for Loader Animation */}
       <style>
         {`
@@ -237,7 +242,7 @@ export default function RightSide({ reviewOutput, testReport, generatedTests, la
           }
         `}
       </style>
-
     </div>
   );
+  
 }

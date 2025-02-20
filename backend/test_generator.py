@@ -79,37 +79,44 @@ class TestGenerator:
 
         else:
             prompt = f"""
-                You are an expert unit test generator.
+                You are an expert JavaScript unit test generator.
 
-                Generate a complete and fully executable test file in JavaScript.
-
-                - The test file must **embed the provided code inside it**.
-                - Do **not** use `require()` or `import` statements.
-                - Use **Jest** for writing test cases (`test`, `describe`, `expect`).
-                - Ensure tests cover **valid inputs, edge cases, and exceptions**.
-                - Return **only valid JavaScript code** (no explanations, no comments, no markdown formatting).
+                Generate a complete and fully executable test file for the given JavaScript code using Mocha and Chai.
 
                 **Code to be tested:**
                 ```javascript
                 {code}
                 ```
 
-                **Test file output format:**
+                **Instructions:**
+                - The test file must **embed the provided code inside it**.
+                - Use Mocha (`describe`, `it`) and Chai (`expect`).
+                - Do not use require use only ES6 conventions
+                - Include tests for **valid inputs, edge cases, and exceptions**.
+                - Use Sinon.js for spies/mocks where needed.
+                - Return **only valid JavaScript code** (no explanations, comments, or markdown formatting).
+
+                **Example Test File Output Format:**
                 ```javascript
+                import describe, it from "mocha";
+                import expect from "chai";
+                import sinon from "sinon";
+
+                // Embed the provided code
                 {code}
 
                 describe('Functionality Tests', () => {{
 
-                    test('Valid case', () => {{
-                        expect(functionName(validInput)).toEqual(expectedOutput);
+                    it('Valid case', () => {{
+                        expect(functionName(validInput)).to.equal(expectedOutput);
                     }});
 
-                    test('Edge case', () => {{
-                        expect(functionName(edgeCaseInput)).toEqual(expectedOutput);
+                    it('Edge case', () => {{
+                        expect(functionName(edgeCaseInput)).to.equal(expectedOutput);
                     }});
 
-                    test('Exception case', () => {{
-                        expect(() => functionName(invalidInput)).toThrow();
+                    it('Exception case', () => {{
+                        expect(() => functionName(invalidInput)).to.throw();
                     }});
 
                 }});

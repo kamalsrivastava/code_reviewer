@@ -248,15 +248,24 @@ const parseTestReport = (testResults, language) => {
     }
 
   } else if (language === "javascript") {
-    const match = testResults.match(/Tests:\s+(\d+) passed, (\d+) failed, (\d+) skipped/);
-    if (match) {
-      passed = parseInt(match[1], 10);
-      failed = parseInt(match[2], 10);
-      total = passed + failed;
-    }
-    const timeMatch = testResults.match(/Time:\s+([\d.]+)s/);
-    if (timeMatch) {
-      time = `${timeMatch[1]} s`;
+    try {
+      // **Extract the JSON part from the testResults**
+      const jsonStart = testResults.indexOf("{");
+      const jsonEnd = testResults.lastIndexOf("}");
+      
+      if (jsonStart !== -1 && jsonEnd !== -1) {
+        const jsonString = testResults.substring(jsonStart, jsonEnd + 1);
+        const parsedResults = JSON.parse(jsonString);
+
+        if (parsedResults.stats) {
+          total = parsedResults.stats.tests || 0;
+          passed = parsedResults.stats.passes || 0;
+          failed = parsedResults.stats.failures || 0;
+          time = parsedResults.stats.duration ? `${parsedResults.stats.duration} ms` : "N/A";
+        }
+      }
+    } catch (error) {
+      console.error("Error parsing JavaScript test report:", error);
     }
   }
 

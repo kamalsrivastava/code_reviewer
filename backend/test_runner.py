@@ -11,14 +11,10 @@ class TestRunner:
             if language == "python":
                 test_file_path = os.path.join(temp_dir, "test_generated.py")
             elif language == "javascript":
-                test_file_path = os.path.join(temp_dir, "jest.config.js")
-                with open(test_file_path, "w") as jest_config:
-                    jest_config.write("""
-                    module.exports = {
-                        testEnvironment: "node",
-                        testMatch: ["**/__tests__/**/*.test.js"]
-                    };
-                    """)
+                # Ensure tests are inside __tests__
+                test_dir = os.path.join(temp_dir, "__tests__")
+                os.makedirs(test_dir, exist_ok=True)
+                test_file_path = os.path.join(test_dir, "test_script.test.mjs")
             else:
                 test_file_path = os.path.join(temp_dir, f"test_script.{language}")
             
@@ -86,15 +82,24 @@ class TestRunner:
 
                 elif language == "javascript":
                     print("[INFO] Setting up JavaScript test environment.")
-                    npm_init_cmd = "npm init -y && npm install jest --save-dev"
-                    npm_result = subprocess.run(npm_init_cmd, shell=True, cwd=temp_dir, capture_output=True, text=True)
+
+                    # Initialize an npm project first to ensure package.json exists
+                    npm_init_cmd = "npm init -y"
+                    subprocess.run(npm_init_cmd, shell=True, cwd=temp_dir, capture_output=True, text=True)
+
+                    # Install Mocha and Chai properly
+                    npm_install_cmd = "npm install mocha chai sinon --save-dev"
+                    npm_result = subprocess.run(npm_install_cmd, shell=True, cwd=temp_dir, capture_output=True, text=True)
 
                     if npm_result.returncode != 0:
-                        print(f"[ERROR] Failed to initialize npm: {npm_result.stderr}")
+                        print(f"[ERROR] Failed to install Mocha/Chai: {npm_result.stderr}")
                         return f"NPM setup failed: {npm_result.stderr}", {"coverage": "No coverage report Generated"}
-                    print("[SUCCESS] Jest installed successfully.")
 
-                    run_cmd = f"npx jest --config jest.config.js --coverage"
+                    print("[SUCCESS] Mocha and Chai installed successfully.")
+
+                    # Run Mocha on the test file
+                    run_cmd = f"npx mocha {test_file_path} --reporter=json"
+
                     print(f"[INFO] Running JavaScript tests with command: {run_cmd}")
                 else:
                     return {"error": "Unsupported language for test execution"}, {"coverage": "No coverage report Generated"}
