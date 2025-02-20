@@ -110,7 +110,7 @@ class TestRunner:
                 print(f"[INFO] Executing command: {run_cmd}")
                 if(language != "javascript"):
                     result = subprocess.run(
-                        run_cmd, cwd=temp_dir, shell=True, capture_output=True, text=True, timeout=10
+                        run_cmd, cwd=temp_dir, shell=True, capture_output=True, text=True, timeout=30
                     )
                 else:
                     result = subprocess.run(
