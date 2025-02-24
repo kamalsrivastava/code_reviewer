@@ -108,10 +108,15 @@ $ npm start
 ## 🎯 Usage Guide
 
 1️⃣ **Write Code**: Use the Monaco Editor on the left panel to enter code.
+
 2️⃣ **Select Language**: Choose **Python, Java, or JavaScript** from the dropdown.
+
 3️⃣ **Run Code**: Click **Compile/Run** to execute the code and view output.
+
 4️⃣ **Review Code**: Click **Code Review** to receive AI-generated feedback.
+
 5️⃣ **Generate Tests**: The system will generate and execute tests automatically.
+
 6️⃣ **Download Report**: A detailed test report can be downloaded as a **PDF**.
 
 ---
