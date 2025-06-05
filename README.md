@@ -182,9 +182,19 @@ backend/
 ![Sample Output](frontend/public/SampleOutputTab1.png)
 ---
 ![Sample Output](frontend/public/SampleOutputTab2.png)
+---
+![Sample Output](frontend/public/JSsnippet1.png)
+---
+![Sample Output](frontend/public/JSsnippet2.png)
+---
+![Sample Output](frontend/public/Javasnippet1.png)
+---
+![Sample Output](frontend/public/Javasnippet2.png)
 
 
 📄 Sample Reports
 
 📥 ![Code Review Report 1](frontend/public/CodeReview_Report.pdf)
 📥 ![Code Review Report 2](frontend/public/CodeReview_Report(1).pdf)
+📥 ![Code Review Report 3](frontend/public/CodeReview_Java.pdf)
+📥 ![Code Review Report 4](frontend/public/CodeReview_JS.pdf)

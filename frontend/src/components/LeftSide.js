@@ -29,7 +29,7 @@ export default function LeftSide({ setReviewOutput, setTestReport, setGeneratedT
     }
 
     try {
-      const response = await axios.post("http://127.0.0.1:5000/execute", {
+      const response = await axios.post("http://localhost:5000/execute", {
         code,
         language,
       });
@@ -54,13 +54,13 @@ export default function LeftSide({ setReviewOutput, setTestReport, setGeneratedT
 
     try {
       setReviewOutput("Please Wait...")
-      const response = await axios.post("http://127.0.0.1:5000/review", {
+      const response = await axios.post("http://localhost:5000/review", {
         code,
         language,
       });
-      setReviewOutput(response.data.ai_suggestions || "No review feedback.");
+      setReviewOutput(response.data.ai_suggestions || response.data.lint_results || "No review feedback.");
 
-      const response1 = await axios.post("http://127.0.0.1:5000/test", {
+      const response1 = await axios.post("http://localhost:5000/test", {
         code,
         language,
       });
@@ -70,8 +70,6 @@ export default function LeftSide({ setReviewOutput, setTestReport, setGeneratedT
       setTestReport(parsedTestReport);
       setGeneratedTests(response1.data.test_cases || "No generated tests available.");
       setCmd(response1.data.test_results);
-
-      // setReviewOutput(response.data.ai_suggestions || "No review feedback.");
     } catch (error) {
       setOutput("Error: Failed to review code.");
       console.error("Review error:", error);

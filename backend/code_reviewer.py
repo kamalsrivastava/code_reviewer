@@ -58,7 +58,7 @@ class CodeReviewer:
         
         try:
             ai_response = self.client.chat.completions.create(
-                model="gpt-4",
+                model="gpt-4o-mini",
                 messages=[{"role": "system", "content": "You are an expert code reviewer."},
                         {"role": "user", "content": prompt}]
             )
