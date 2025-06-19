@@ -187,7 +187,7 @@ backend/
 ---
 ![Sample Output](frontend/public/JSsnippet2.png)
 ---
-![Sample Output](frontend/public/Javasnippet1.png)
+![Sample Output](frontend/public/JavaSnippet1.png)
 ---
 ![Sample Output](frontend/public/Javasnippet2.png)
 
